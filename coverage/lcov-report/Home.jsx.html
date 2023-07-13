@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/6</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/8</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -159,51 +159,22 @@
 <a name='L94'></a><a href='#L94'>94</a>
 <a name='L95'></a><a href='#L95'>95</a>
 <a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a>
-<a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,6 +183,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -282,56 +255,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import vaccineData from "../vaccineData";
+import { useGlobalState } from "../Context";
 &nbsp;
 const Home = () =&gt; {
+  const [user, setUser] = useGlobalState("user");
+  const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
   const userData = [
     {
       name: "John",
       phone: "123",
     },
   ];
-  const columns = [
-    { title: "Vaccine Center", dataIndex: "center", Key: "center" },
-    {
-      title: "Vaccine Date",
-      dataIndex: "date",
-      Key: "date",
-      sorter: <span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; {
-<span class="cstat-no" title="statement not covered" >        a.date - b.date;</span>
-      },
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      Key: "center",
-      render: <span class="fstat-no" title="function not covered" >(o</span>rder, record) =&gt; {
-<span class="cstat-no" title="statement not covered" >        return &lt;div&gt;{record.status === false ? &lt;div&gt;false&lt;/div&gt; : &lt;div&gt;true&lt;/div&gt;}&lt;/div&gt;;</span>
-      },
-    },
-    { title: "Operator", dataIndex: "operator", Key: "operator" },
-    { title: "Action", dataIndex: "certificate_url", Key: "certificate_url" },
-  ];
+  useEffect(() =&gt; {
+    console.log(user);
+  }, []);
   return (
     &lt;div&gt;
       &lt;Navbar /&gt;
       &lt;div&gt;
-        &lt;div className="m-10 border-l-2 border-l-black border-r-2 border-r-black rounded-lg shadow-md p-10"&gt;
+        &lt;div className="m-10 border-l-2 border-l-black border-r-2 border-r-black rounded-lg shadow-md p-4 lg:p-10"&gt;
           {userData.map((item, i) =&gt; {
             return (
               &lt;div key={i}&gt;
                 {/* Title */}
 &nbsp;
-                &lt;div className="flex justify-between items-center gap-x-2 mb-16"&gt;
+                &lt;div className="flex justify-between items-center gap-x-2 mb-8 lg:mb-16"&gt;
                   &lt;hr className="w-1/6 border border-gray-300" /&gt;
-                  &lt;div className="text-gray-500"&gt;Personal Information&lt;/div&gt;
+                  &lt;div className="text-gray-500 text-xs lg:text-lg"&gt;
+                    Personal Information
+                  &lt;/div&gt;
                   &lt;hr className="w-4/6 border border-gray-300" /&gt;
                 &lt;/div&gt;
 &nbsp;
-                &lt;div className="px-16 flex flex-col gap-6"&gt;
+                &lt;div className="px-2 lg:px-16 flex flex-col gap-6"&gt;
                   &lt;div data-testid="name" className=""&gt;
                     &lt;b&gt;Name:&lt;/b&gt; {item.name}
                   &lt;/div&gt;
@@ -347,13 +306,15 @@ const Home = () =&gt; {
               &lt;div key={i}&gt;
                 {/* Title */}
 &nbsp;
-                &lt;div className="flex justify-between items-center gap-x-2 my-16"&gt;
+                &lt;div className="flex justify-between items-center gap-x-2 my-8 lg:my-16"&gt;
                   &lt;hr className="w-1/6 border border-gray-300" /&gt;
-                  &lt;div className="text-gray-500"&gt;Vaccine Information&lt;/div&gt;
+                  &lt;div className="text-gray-500 text-xs lg:text-lg"&gt;
+                    Vaccine Information
+                  &lt;/div&gt;
                   &lt;hr className="w-4/6 border border-gray-300" /&gt;
                 &lt;/div&gt;
 &nbsp;
-                &lt;div className="px-16 flex flex-col gap-6"&gt;
+                &lt;div className="px-2 lg:px-16 flex flex-col gap-6"&gt;
                   &lt;div data-testid="center" className=""&gt;
                     &lt;b&gt;Center:&lt;/b&gt; {item.center}
                   &lt;/div&gt;
@@ -385,9 +346,6 @@ const Home = () =&gt; {
           })}
         &lt;/div&gt;
       &lt;/div&gt;
-      {/* &lt;div className="w-full mt-8 flex flex-col gap-4 justify-center px-20"&gt;
-        &lt;Table dataSource={vaccineData} columns={columns} /&gt;
-      &lt;/div&gt; */}
     &lt;/div&gt;
   );
 };
@@ -400,7 +358,7 @@ export default Home;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-13T13:42:03.084Z
+                at 2023-07-13T19:42:44.994Z
             </div>
         <script src="prettify.js"></script>
         <script>

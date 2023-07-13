@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
 import vaccineData from "../vaccineData";
 import { useGlobalState } from "../Context";
@@ -12,9 +12,6 @@ const Home = () => {
       phone: "123",
     },
   ];
-  useEffect(() => {
-    console.log(user);
-  }, []);
   return (
     <div>
       <Navbar />

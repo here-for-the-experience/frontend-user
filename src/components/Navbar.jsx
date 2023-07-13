@@ -21,6 +21,7 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { useGlobalState } from "../Context";
+import { prefix } from "../prefix";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
@@ -40,6 +41,20 @@ function Navbar() {
         Vaccination
       </button>
       <Menubar>
+        {user.role_id === 2 ? (
+          <MenubarMenu>
+            <MenubarTrigger
+              onClick={() => {
+                window.location.href = `https://${prefix}admin.redevps.store`;
+              }}
+              className="cursor-pointer"
+            >
+              Admin panel
+            </MenubarTrigger>
+          </MenubarMenu>
+        ) : (
+          ""
+        )}
         {isLoggedIn ? (
           <MenubarMenu>
             <MenubarTrigger className="cursor-pointer">
