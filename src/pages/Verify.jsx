@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,20 +41,20 @@ function Verify() {
         pauseOnHover
         theme="colored"
       />
-      <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg bg-white">
+      <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg lg:bg-white">
         <AiOutlineHome
           onClick={() => nav("/")}
           className="fixed top-5 lg:top-10 left-5 lg:left-10 text-xl lg:text-3xl cursor-pointer"
         />
-        <div className="lg:m-24">
+        <div className="lg:m-10">
           <div className="text-center text-2xl mb-2 lg:mb-4 font-medium">
             Verify your phone number
           </div>
-          <div className="text-justify text-sm mb-4 lg:mb-8 text-gray-600 font-thin">
+          <div className="text-justify px-6 text-sm mb-4 lg:mb-8 text-gray-600 font-thin">
             *We've sent an SMS to your phone, please submit the given code to
             verify your number.
           </div>
-          <div className="flex flex-col gap-y-4 px-5 lg:pr-0">
+          <div className="flex flex-col gap-y-8 px-5 lg:pr-0">
             <div className="grid grid-cols-4 items-center">
               <Label htmlFor="code" className="text-left">
                 Code
