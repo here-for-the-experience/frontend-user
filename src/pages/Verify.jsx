@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useNavigate } from "react-router-dom";
@@ -68,13 +67,13 @@ function Verify() {
               />
             </div>
             <div className="flex justify-center">
-              <Button
+              <button
                 onClick={() => verify()}
                 className="col-start-2 px-16"
                 type="submit"
               >
                 Submit
-              </Button>
+              </button>
             </div>
           </div>
         </div>
