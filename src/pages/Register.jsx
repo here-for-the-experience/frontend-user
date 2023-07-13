@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -13,7 +14,6 @@ import {
 } from "../ui/select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 // import auth from "./auth";
 
@@ -24,7 +24,8 @@ function Register() {
   const [cpassword, setCPassword] = useState("");
   const [address, setAddress] = useState("");
   const [nid, setNid] = useState("");
-  const nav = useNavigate();
+  const [passError, setPassError] = useState(false);
+
   const register = () => {
     const dataToPost = new FormData();
     dataToPost.set("name", name);
@@ -34,6 +35,7 @@ function Register() {
     dataToPost.set("password", password);
     if (cpassword !== password) {
       toast.error("Passwords do not match");
+      setPassError(true);
     } else {
       //   auth
       //     .post("/users/create", {
@@ -64,7 +66,8 @@ function Register() {
       <div className="w-full lg:w-5/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg lg:bg-white">
         <div className="lg:m-10">
           <AiOutlineHome
-            onClick={() => nav("/")}
+            data-testid="home"
+            onClick={() => (window.location.pathname = "/")}
             className="fixed top-5 lg:top-10 left-5 lg:left-10 text-xl lg:text-3xl cursor-pointer"
           />
           <div className="text-center text-2xl mb-4 lg:mb-16 font-medium">
@@ -218,7 +221,10 @@ function Register() {
           </div>
           <div className="flex justify-center gap-x-4 mt-8 px-5">
             <div className="text-gray-500">Already have an account?</div>
-            <button onClick={() => nav("/login")} className="hover:underline">
+            <button
+              onClick={() => (window.location.pathname = "/login")}
+              className="hover:underline"
+            >
               Log in
             </button>
           </div>

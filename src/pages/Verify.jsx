@@ -1,7 +1,7 @@
+import React from "react";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useNavigate } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 function Verify() {
   const [code, setCode] = useState("");
-  const nav = useNavigate();
   const verify = () => {
     if (code) {
       const dataToPost = new FormData();
@@ -42,7 +41,8 @@ function Verify() {
       />
       <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg lg:bg-white">
         <AiOutlineHome
-          onClick={() => nav("/")}
+          data-testid="home"
+          onClick={() => (window.location.pathname = "/")}
           className="fixed top-5 lg:top-10 left-5 lg:left-10 text-xl lg:text-3xl cursor-pointer"
         />
         <div className="lg:m-10">

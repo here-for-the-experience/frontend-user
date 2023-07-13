@@ -1,16 +1,8 @@
+import React from "react";
 import Navbar from "../components/Navbar";
+import vaccineData from "../vaccineData";
 
 const Home = () => {
-  const vaccineData = [
-    {
-      u_id: 1,
-      date: "13/07/20",
-      center: "Dhaka Medical College",
-      status: false,
-      certificate_url: null,
-      operator: "Abdur Rahim",
-    },
-  ];
   const userData = [
     {
       name: "John",
@@ -32,7 +24,7 @@ const Home = () => {
       dataIndex: "status",
       Key: "center",
       render: (order, record) => {
-        return <div>{record.status === false ? <div>false</div> : "true"}</div>;
+        return <div>{record.status === false ? <div>false</div> : <div>true</div>}</div>;
       },
     },
     { title: "Operator", dataIndex: "operator", Key: "operator" },
@@ -55,10 +47,10 @@ const Home = () => {
                 </div>
 
                 <div className="px-16 flex flex-col gap-6">
-                  <div className="">
+                  <div data-testid="name" className="">
                     <b>Name:</b> {item.name}
                   </div>
-                  <div className="">
+                  <div data-testid="phone" className="">
                     <b>Phone:</b> {item.phone}
                   </div>
                 </div>
@@ -77,13 +69,13 @@ const Home = () => {
                 </div>
 
                 <div className="px-16 flex flex-col gap-6">
-                  <div className="">
+                  <div data-testid="center" className="">
                     <b>Center:</b> {item.center}
                   </div>
-                  <div className="">
+                  <div data-testid="date" className="">
                     <b>Date:</b> {item.date}
                   </div>
-                  <div className="">
+                  <div data-testid="status" className="">
                     <b>Status:</b>{" "}
                     {item.status === false ? (
                       <div className="text-yellow-500 inline">Pending</div>
@@ -91,7 +83,7 @@ const Home = () => {
                       <div className="text-green-500 inline">Complete</div>
                     )}
                   </div>
-                  <div className="">
+                  <div data-testid="cert" className="">
                     <b>Certificate:</b>{" "}
                     {item.certificate_url ? (
                       <button className="hover:underline">Download</button>
@@ -99,7 +91,7 @@ const Home = () => {
                       "Not available yet"
                     )}
                   </div>
-                  <div className="">
+                  <div data-testid="operator" className="">
                     <b>Operator:</b> {item.operator}
                   </div>
                 </div>

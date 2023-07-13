@@ -26,6 +26,7 @@ function Login() {
     <div className="min-h-screen bg-gray-50 flex flex-col min-w-screen justify-center">
       <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg lg:bg-white">
         <AiOutlineHome
+          data-testid="home"
           onClick={() => (window.location.pathname = "/")}
           className="fixed top-5 lg:top-10 left-5 lg:left-10 text-xl lg:text-3xl cursor-pointer"
         />

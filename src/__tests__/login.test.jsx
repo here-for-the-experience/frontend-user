@@ -1,7 +1,7 @@
 import React from "react";
-import { render, fireEvent, getByTestId } from "@testing-library/react";
-import { describe, expect, test, jest } from "@jest/globals";
-import Login from "../pages/login";
+import { render, fireEvent } from "@testing-library/react";
+import { describe, expect, test, beforeAll, afterAll } from "@jest/globals";
+import Login from "../pages/Login";
 
 describe("Login component", () => {
   test("renders without errors", () => {
@@ -11,7 +11,7 @@ describe("Login component", () => {
 
   test("updates phone state on input change", () => {
     const { getByTestId } = render(<Login />);
-    const phoneInput = getByTestId("phone")
+    const phoneInput = getByTestId("phone");
 
     // Simulate user input in the phone input field
     fireEvent.change(phoneInput, { target: { value: "1234567890" } });
@@ -32,4 +32,49 @@ describe("Login component", () => {
   });
 
   // Add more test cases to cover different scenarios and edge cases
+});
+
+describe("Register component", () => {
+  let originalLocation;
+
+  beforeAll(() => {
+    originalLocation = window.location;
+    // Mock window.location.pathname
+    delete window.location;
+    window.location = { pathname: "/" };
+  });
+
+  afterAll(() => {
+    // Restore original window.location
+    window.location = originalLocation;
+  });
+
+  test('should navigate to "/login" on button click', () => {
+    const { getByText } = render(<Login />);
+
+    const signUpButton = getByText("Sign up");
+
+    fireEvent.click(signUpButton);
+
+    expect(window.location.pathname).toBe("/register");
+  });
+
+  test('should navigate to "/" on button click', () => {
+    const { getByTestId } = render(<Login />);
+
+    const homeButton = getByTestId("home");
+
+    fireEvent.click(homeButton);
+
+    expect(window.location.pathname).toBe("/");
+  });
+
+  test("should call auth.post with the correct data", () => {
+    // Define the test data
+    const phone = "1234567890";
+    const password = "password";
+    const expectedData = new FormData();
+    expectedData.set("phone", phone);
+    expectedData.set("password", password);
+  });
 });

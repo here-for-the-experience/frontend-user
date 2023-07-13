@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import {
   Menubar,
   MenubarContent,
@@ -12,10 +12,12 @@ import {
 } from "../ui/menubar";
 
 function Navbar() {
-  const nav = useNavigate();
   return (
     <div className="flex justify-between items-center border-b border-b-black py-2 px-4 lg:p-4 lg:px-24">
-      <button className="font-medium" onClick={() => nav("/")}>
+      <button
+        className="font-medium"
+        onClick={() => (window.location.pathname = "/")}
+      >
         Vaccination
       </button>
       <Menubar>
@@ -25,7 +27,7 @@ function Navbar() {
         <MenubarMenu>
           <MenubarTrigger className="cursor-pointer">Login</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => nav("/login")}>
+            <MenubarItem onClick={() => (window.location.pathname = "/login")}>
               Using Email-Password
             </MenubarItem>
             <MenubarSeparator />
