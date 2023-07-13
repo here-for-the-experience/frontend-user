@@ -2,6 +2,15 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -10,14 +19,18 @@ import { AiOutlineHome } from "react-icons/ai";
 
 function Register() {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [nid, setNid] = useState("");
   const nav = useNavigate();
   const register = () => {
     const dataToPost = new FormData();
     dataToPost.set("name", name);
-    dataToPost.set("email", email);
+    dataToPost.set("phone", phone);
+    dataToPost.set("nid", nid);
+    dataToPost.set("address", address);
     dataToPost.set("password", password);
     if (cpassword !== password) {
       toast.error("Passwords do not match");
@@ -48,16 +61,19 @@ function Register() {
         pauseOnHover
         theme="colored"
       />
-      <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg bg-white">
-        <div className="lg:m-24">
+      <div className="w-full lg:w-5/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg lg:bg-white">
+        <div className="lg:m-20">
           <AiOutlineHome
             onClick={() => nav("/")}
             className="fixed top-5 lg:top-10 left-5 lg:left-10 text-xl lg:text-3xl cursor-pointer"
           />
-          <div className="text-center text-2xl mb-4 lg:mb-8 font-medium">
-            Create your account
+          <div className="text-center text-2xl mb-4 lg:mb-16 font-medium">
+            Register for vaccine
           </div>
-          <div className="flex flex-col gap-y-4 px-5 lg:pr-0">
+
+          {/* Name and Phone */}
+
+          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0">
             <div className="grid grid-cols-4 items-center">
               <Label htmlFor="name" className="text-left">
                 Name
@@ -70,16 +86,101 @@ function Register() {
               />
             </div>
             <div className="grid grid-cols-4 items-center">
-              <Label htmlFor="email" className="text-left">
-                Email
+              <Label htmlFor="phone" className="text-left">
+                Phone
               </Label>
               <Input
-                onChange={(e) => setEmail(e.target.value)}
-                id="email"
-                type="email"
+                onChange={(e) => setPhone(e.target.value)}
+                id="phone"
+                type="text"
                 className="col-span-3"
               />
             </div>
+          </div>
+
+          {/* Address and NID */}
+
+          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0 mt-8">
+            <div className="grid grid-cols-4 items-center">
+              <Label htmlFor="address" className="text-left">
+                Address
+              </Label>
+              <Input
+                onChange={(e) => setAddress(e.target.value)}
+                id="address"
+                type="text"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center">
+              <Label htmlFor="nid" className="text-left">
+                NID Number
+              </Label>
+              <Input
+                onChange={(e) => setNid(e.target.value)}
+                id="nid"
+                type="password"
+                className="col-span-3"
+              />
+            </div>
+          </div>
+
+          {/* City and Center */}
+
+          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0 mt-8">
+            <div className="grid grid-cols-4 items-center">
+              <Label htmlFor="city" className="text-left">
+                City
+              </Label>
+              <Select>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select a city" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>City</SelectLabel>
+                    <SelectItem value="apple">Apple</SelectItem>
+                    <SelectItem value="banana">Banana</SelectItem>
+                    <SelectItem value="blueberry">Blueberry</SelectItem>
+                    <SelectItem value="grapes">Grapes</SelectItem>
+                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-4 items-center">
+              <Label htmlFor="center" className="text-left">
+                Vaccine Center
+              </Label>
+              <Select>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select a center" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Center</SelectLabel>
+                    <SelectItem value="apple">Apple</SelectItem>
+                    <SelectItem value="banana">Banana</SelectItem>
+                    <SelectItem value="blueberry">Blueberry</SelectItem>
+                    <SelectItem value="grapes">Grapes</SelectItem>
+                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Title */}
+
+          {/* <div className="flex items-center gap-x-2 my-4">
+            <hr className="w-1/6" />
+            <div className="text-gray-500">Credentials</div>
+            <hr className="w-5/6" />
+          </div> */}
+
+          {/* Password */}
+
+          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0 mt-8">
             <div className="grid grid-cols-4 items-center">
               <Label htmlFor="password" className="text-left">
                 Password
@@ -102,21 +203,24 @@ function Register() {
                 className="col-span-3"
               />
             </div>
-            <div className="flex justify-center">
-              <Button
-                onClick={() => register()}
-                className="col-start-2 px-16"
-                type="button"
-              >
-                Signup
-              </Button>
-            </div>
-            <div className="flex justify-between">
-              <div className="text-gray-500">Already have an account?</div>
-              <button onClick={() => nav("/login")} className="hover:underline">
-                Log in
-              </button>
-            </div>
+          </div>
+
+          {/* Submit */}
+
+          <div className="flex justify-center mt-8">
+            <Button
+              onClick={() => register()}
+              className="col-start-2 px-16"
+              type="button"
+            >
+              Signup
+            </Button>
+          </div>
+          <div className="flex justify-center gap-x-4 mt-8 px-5">
+            <div className="text-gray-500">Already have an account?</div>
+            <button onClick={() => nav("/login")} className="hover:underline">
+              Log in
+            </button>
           </div>
         </div>
       </div>

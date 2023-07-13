@@ -7,12 +7,12 @@ import { AiOutlineHome } from "react-icons/ai";
 // import auth from "./auth";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
   const login = () => {
     const dataToPost = new FormData();
-    dataToPost.set("username", email);
+    dataToPost.set("phone", phone);
     dataToPost.set("password", password);
     // auth
     //   .post("/login", dataToPost)
@@ -36,13 +36,13 @@ function Login() {
           </div>
           <div className="flex flex-col gap-y-4 px-5 lg:pr-0">
             <div className="grid grid-cols-4 items-center">
-              <Label htmlFor="email" className="text-left">
-                Email
+              <Label htmlFor="phone" className="text-left">
+                Phone
               </Label>
               <Input
-                onChange={(e) => setEmail(e.target.value)}
-                id="email"
-                type="email"
+                onChange={(e) => setPhone(e.target.value)}
+                id="phone"
+                type="text"
                 className="col-span-3"
               />
             </div>
