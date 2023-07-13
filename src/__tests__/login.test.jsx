@@ -11,13 +11,13 @@ describe("Login component", () => {
 
   test("updates phone state on input change", () => {
     const { getByTestId } = render(<Login />);
-    const phoneInput = getByTestId("phone");
+    const emailInput = getByTestId("email");
 
     // Simulate user input in the phone input field
-    fireEvent.change(phoneInput, { target: { value: "1234567890" } });
+    fireEvent.change(emailInput, { target: { value: "1234567890" } });
 
     // Assert that the phone state is updated correctly
-    expect(phoneInput.value).toBe("1234567890");
+    expect(emailInput.value).toBe("1234567890");
   });
 
   test("updates password state on input change", () => {

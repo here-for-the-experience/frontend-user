@@ -2,14 +2,12 @@ import { createGlobalState } from "react-hooks-global-state";
 const userState = {
   isLoggedIn: false,
   user: {
-    accessToken: "",
-    refereshToken: "",
     id: null,
     name: "",
-    profile_img: null,
     email: null,
-    phone: null,
-    groups: [],
+    address: "",
+    phone: "",
+    role_id: "",
     verified: false,
   },
 };
