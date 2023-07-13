@@ -1,35 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Verify from "./pages/Verify";
+import auth from "./auth";
+import { useGlobalState } from "./Context";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+let didInit = false;
+
+export const testContract = () => {
+  // You can also make requests using axios directly
+  axios
+    .get("https://dev.api.redevops.store/openapi.json")
+    .then((res) => console.log(res))
+    .catch((err) => console.error(err));
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useGlobalState("user");
+  const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
+  const [loading, setLoading] = useState(true);
+  const getData = (counter) => {
+    if (counter > 2) setLoading(false);
+    if (counter < 2) {
+      auth
+        .get("/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        })
+        .then((profileResponse) => {
+          let toUpdateKeys = [
+            "id",
+            "name",
+            "email",
+            "address",
+            "phone",
+            "role_id",
+            "verified",
+          ];
+          let profile = profileResponse.data;
+          Object.keys(user).forEach((k) => {
+            if (toUpdateKeys.includes(k)) {
+              user[k] = profile[k];
+            }
+          });
+          setUser(user);
+          setIsLoggedIn(true);
+          setLoading(false);
+        })
+        .catch((err) => {
+          try {
+            if (err.response.status === 401) {
+              getData(counter + 1);
+            }
+          } catch {
+            console.log("Error loading profile", err);
+            setLoading(false);
+          }
+          setLoading(false);
+          console.log(err);
+        });
+    }
+  };
 
-  return (
-    <>
+  useEffect(() => {
+    if (!didInit) {
+      didInit = true;
+      getData(0);
+    }
+    testContract();
+  }, []);
+
+  if (loading) return <br />;
+  else
+    return (
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="verify" element={<Verify />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    );
 }
 
-export default App
+export default App;
