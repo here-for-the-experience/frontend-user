@@ -1,15 +1,14 @@
+import React from "react";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { AiOutlineHome } from "react-icons/ai";
 // import auth from "./auth";
 
 function Login() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const nav = useNavigate();
   const login = () => {
     const dataToPost = new FormData();
     dataToPost.set("phone", phone);
@@ -25,12 +24,13 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col min-w-screen justify-center">
-      <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg bg-white">
+      <div className="w-full lg:w-2/6 mx-auto lg:border lg:rounded-lg lg:shadow-lg lg:bg-white">
         <AiOutlineHome
-          onClick={() => nav("/")}
+          data-testid="home"
+          onClick={() => (window.location.pathname = "/")}
           className="fixed top-5 lg:top-10 left-5 lg:left-10 text-xl lg:text-3xl cursor-pointer"
         />
-        <div className="lg:m-24">
+        <div className="lg:m-10">
           <div className="text-center text-2xl mb-4 lg:mb-8 font-medium">
             Log in to your account
           </div>
@@ -40,6 +40,7 @@ function Login() {
                 Phone
               </Label>
               <Input
+                data-testid="phone"
                 onChange={(e) => setPhone(e.target.value)}
                 id="phone"
                 type="text"
@@ -51,6 +52,7 @@ function Login() {
                 Password
               </Label>
               <Input
+                data-testid="password"
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 type="password"
@@ -72,7 +74,7 @@ function Login() {
             <div className="flex justify-between">
               <div className="text-gray-500">Need an account?</div>
               <button
-                onClick={() => nav("/register")}
+                onClick={() => (window.location.pathname = "/register")}
                 className="hover:underline"
               >
                 Sign up
