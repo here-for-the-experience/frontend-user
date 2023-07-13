@@ -3,17 +3,16 @@ import Navbar from "../components/Navbar";
 import { useGlobalState } from "../Context";
 import api from "../api";
 
+export const download = () => {
+  const link = document.createElement("a");
+  link.href = `${vaccineData.certificate_url}`;
+  link.download = "certificate.jpg";
+  link.click();
+};
 const Home = () => {
   const [user, setUser] = useGlobalState("user");
   const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
   const [vaccineData, setVaccineData] = useState([]);
-
-  const download = () => {
-    const link = document.createElement("a");
-    link.href = `${vaccineData.certificate_url}`;
-    link.download = "certificate.jpg";
-    link.click();
-  };
 
   useEffect(() => {
     api
@@ -83,6 +82,7 @@ const Home = () => {
                 <b>Certificate:</b>{" "}
                 {vaccineData.certificate_url ? (
                   <button
+                    data-testid="img"
                     className="hover:underline"
                     onClick={() => download()}
                   >
