@@ -8,6 +8,7 @@ import auth from "./auth";
 import { useGlobalState } from "./Context";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Private from "./components/Private";
 
 let didInit = false;
 
@@ -82,7 +83,14 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/">
-              <Route index element={<Home />} />
+              <Route
+                index
+                element={
+                  <Private>
+                    <Home />
+                  </Private>
+                }
+              />
               <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />

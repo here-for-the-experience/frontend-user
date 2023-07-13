@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import vaccineData from "../vaccineData";
 import { useGlobalState } from "../Context";
+import api from "../api";
 
 const Home = () => {
   const [user, setUser] = useGlobalState("user");
   const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
+  const [vaccineData, setVaccineData] = useState([]);
+
+  const download = () => {
+    const link = document.createElement("a");
+    link.href = `${vaccineData.certificate_url}`;
+    link.download = "certificate.jpg";
+    link.click();
+  };
+
+  useEffect(() => {
+    api
+      .post("/create", {
+        token: localStorage.getItem("jwt"),
+      })
+      .then(() =>
+        api
+          .post("/myvaccine", {
+            token: localStorage.getItem("jwt"),
+          })
+          .then((res) => setVaccineData(res.data[0]))
+          .catch((err) => console.log(err))
+      )
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -43,11 +69,8 @@ const Home = () => {
             </div>
 
             <div className="px-2 lg:px-16 flex flex-col gap-6">
-              <div data-testid="center" className="">
-                <b>Center:</b> {user.center}
-              </div>
               <div data-testid="date" className="">
-                <b>Date:</b> {user.date}
+                <b>Date:</b> {vaccineData.vaccination_date}
               </div>
               <div data-testid="status" className="">
                 <b>Status:</b>{" "}
@@ -59,14 +82,16 @@ const Home = () => {
               </div>
               <div data-testid="cert" className="">
                 <b>Certificate:</b>{" "}
-                {user.certificate_url ? (
-                  <button className="hover:underline">Download</button>
+                {vaccineData.certificate_url ? (
+                  <button
+                    className="hover:underline"
+                    onClick={() => download()}
+                  >
+                    Download
+                  </button>
                 ) : (
                   "Not available yet"
                 )}
-              </div>
-              <div data-testid="operator" className="">
-                <b>Operator:</b> {user.operator}
               </div>
             </div>
           </div>
