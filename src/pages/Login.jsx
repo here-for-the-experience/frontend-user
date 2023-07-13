@@ -4,22 +4,55 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { AiOutlineHome } from "react-icons/ai";
-// import auth from "./auth";
+import auth from "../auth";
+import { useGlobalState } from "../Context";
 
 function Login() {
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useGlobalState("user");
+  const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
   const login = () => {
     const dataToPost = new FormData();
-    dataToPost.set("phone", phone);
+    dataToPost.set("username", email);
     dataToPost.set("password", password);
-    // auth
-    //   .post("/login", dataToPost)
-    //   .then((res) => {
-    //     console.log(res);
-    //     localStorage.setItem("jwt", res.data.access_token);
-    //   })
-    //   .catch((err) => console.log(err));
+    auth
+      .post("/login", dataToPost)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("jwt", res.data.access_token);
+        auth
+          .get("/profile", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+          })
+          .then((profileResponse) => {
+            console.log(profileResponse);
+            let toUpdateKeys = [
+              "id",
+              "name",
+              "email",
+              "address",
+              "phone",
+              "role_id",
+              "verified",
+            ];
+            let profile = profileResponse.data;
+            Object.keys(user).forEach((k) => {
+              if (toUpdateKeys.includes(k)) {
+                user[k] = profile[k];
+              }
+            });
+            setUser(user);
+            setIsLoggedIn(true);
+            window.location.pathname = "/";
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -36,14 +69,14 @@ function Login() {
           </div>
           <div className="flex flex-col gap-y-4 px-5 lg:pr-0">
             <div className="grid grid-cols-4 items-center">
-              <Label htmlFor="phone" className="text-left">
-                Phone
+              <Label htmlFor="email" className="text-left">
+                Email
               </Label>
               <Input
-                data-testid="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                id="phone"
-                type="text"
+                data-testid="email"
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                type="email"
                 className="col-span-3"
               />
             </div>

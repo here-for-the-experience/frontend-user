@@ -3,22 +3,14 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineHome } from "react-icons/ai";
-// import auth from "./auth";
+import auth from "../auth";
 
 function Register() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
@@ -29,24 +21,29 @@ function Register() {
   const register = () => {
     const dataToPost = new FormData();
     dataToPost.set("name", name);
-    dataToPost.set("phone", phone);
+    dataToPost.set("email", email);
     dataToPost.set("nid", nid);
+    dataToPost.set("phone", phone);
     dataToPost.set("address", address);
     dataToPost.set("password", password);
     if (cpassword !== password) {
       toast.error("Passwords do not match");
       setPassError(true);
     } else {
-      //   auth
-      //     .post("/users/create", {
-      //       name: name,
-      //       email: email,
-      //       password: password
-      //     })
-      //     .then((res) => {
-      //       console.log(res);
-      //     })
-      //     .catch((err) => console.log(err));
+      auth
+        .post("/create", {
+          name: name,
+          email: email,
+          phone_number: phone,
+          password: password,
+          address: address,
+          nid: nid,
+          role_id: 1,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
     }
   };
   return (
@@ -74,9 +71,9 @@ function Register() {
             Register for vaccine
           </div>
 
-          {/* Name and Phone */}
+          {/* Name and email */}
 
-          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0">
+          <div className="grid lg:grid-cols-3 gap-y-8 gap-x-8 px-5 lg:pr-0">
             <div className="grid grid-cols-4 items-center">
               <Label htmlFor="name" className="text-left">
                 Name
@@ -85,6 +82,17 @@ function Register() {
                 onChange={(e) => setName(e.target.value)}
                 id="name"
                 type="text"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center">
+              <Label htmlFor="email" className="text-left">
+                Email
+              </Label>
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                type="email"
                 className="col-span-3"
               />
             </div>
@@ -103,7 +111,7 @@ function Register() {
 
           {/* Address and NID */}
 
-          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0 mt-8">
+          <div className="grid lg:grid-cols-2 gap-y-8 gap-x-8 px-5 lg:pr-0 mt-8">
             <div className="grid grid-cols-4 items-center">
               <Label htmlFor="address" className="text-left">
                 Address
@@ -122,54 +130,9 @@ function Register() {
               <Input
                 onChange={(e) => setNid(e.target.value)}
                 id="nid"
-                type="password"
+                type="text"
                 className="col-span-3"
               />
-            </div>
-          </div>
-
-          {/* City and Center */}
-
-          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0 mt-8">
-            <div className="grid grid-cols-4 items-center">
-              <Label htmlFor="city" className="text-left">
-                City
-              </Label>
-              <Select>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select a city" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>City</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-4 items-center">
-              <Label htmlFor="center" className="text-left">
-                Vaccine Center
-              </Label>
-              <Select>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select a center" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Center</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
             </div>
           </div>
 
@@ -183,7 +146,7 @@ function Register() {
 
           {/* Password */}
 
-          <div className="grid lg:grid-cols-2 gap-y-4 gap-x-8 px-5 lg:pr-0 mt-8">
+          <div className="grid lg:grid-cols-2 gap-y-8 gap-x-8 px-5 lg:pr-0 mt-8">
             <div className="grid grid-cols-4 items-center">
               <Label htmlFor="password" className="text-left">
                 Password
