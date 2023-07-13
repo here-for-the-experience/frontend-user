@@ -7,8 +7,17 @@ import Verify from "./pages/Verify";
 import auth from "./auth";
 import { useGlobalState } from "./Context";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 let didInit = false;
+
+export const testContract = () => {
+  // You can also make requests using axios directly
+  axios
+    .get("https://dev.api.redevops.store/openapi.json")
+    .then((res) => console.log(res))
+    .catch((err) => console.error(err));
+};
 
 function App() {
   const [user, setUser] = useGlobalState("user");
@@ -24,7 +33,6 @@ function App() {
           },
         })
         .then((profileResponse) => {
-          console.log(profileResponse);
           let toUpdateKeys = [
             "id",
             "name",
@@ -64,6 +72,7 @@ function App() {
       didInit = true;
       getData(0);
     }
+    testContract();
   }, []);
 
   if (loading) return <br />;
