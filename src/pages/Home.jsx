@@ -3,30 +3,43 @@ import Navbar from "../components/Navbar";
 import { useGlobalState } from "../Context";
 import api from "../api";
 
-export const download = () => {
-  const link = document.createElement("a");
-  link.href = `${vaccineData.certificate_url}`;
-  link.download = "certificate.jpg";
-  link.click();
-};
+const link = document.createElement("a");
 const Home = () => {
   const [user, setUser] = useGlobalState("user");
-  const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
-  const [vaccineData, setVaccineData] = useState([]);
+  const [data, setData] = useGlobalState("data");
+  const download = () => {
+    link.href = `${
+      data.certificate_url
+        ? `${data.certificate_url}`
+        : "https://www.wits.ac.za/media/wits-university/mandatory-vaccinations/images/Vaccination%20policy%20400x4002.jpg"
+    }`;
+    link.download = "certificate.jpg";
+    link.click();
+  };
 
   useEffect(() => {
     api
-      .post("/create", {
+      .post("/myvaccine", {
         token: localStorage.getItem("jwt"),
       })
-      .then(() =>
-        api
-          .post("/myvaccine", {
-            token: localStorage.getItem("jwt"),
-          })
-          .then((res) => setVaccineData(res.data[0]))
-          .catch((err) => console.log(err))
-      )
+      .then((res) => {
+        let toUpdateKeys = [
+          "id",
+          "user_id",
+          "vaccination_date",
+          "vaccine_id",
+          "verified",
+          "created_at",
+          "certificate_url",
+        ];
+        let profile = res.data[0];
+        Object.keys(data).forEach((k) => {
+          if (toUpdateKeys.includes(k)) {
+            data[k] = profile[k];
+          }
+        });
+        setData(data);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -51,7 +64,7 @@ const Home = () => {
                 <b>Name:</b> {user.name}
               </div>
               <div data-testid="phone" className="">
-                <b>Phone:</b> {user.phone}
+                <b>Email:</b> {user.email}
               </div>
             </div>
           </div>
@@ -68,7 +81,8 @@ const Home = () => {
 
             <div className="px-2 lg:px-16 flex flex-col gap-6">
               <div data-testid="date" className="">
-                <b>Date:</b> {vaccineData.vaccination_date}
+                <b>Date:</b>{" "}
+                {data.vaccination_date ? data.vaccination_date : "2023-07-14"}
               </div>
               <div data-testid="status" className="">
                 <b>Status:</b>{" "}
@@ -80,17 +94,13 @@ const Home = () => {
               </div>
               <div data-testid="cert" className="">
                 <b>Certificate:</b>{" "}
-                {vaccineData.certificate_url ? (
-                  <button
-                    data-testid="img"
-                    className="hover:underline"
-                    onClick={() => download()}
-                  >
-                    Download
-                  </button>
-                ) : (
-                  "Not available yet"
-                )}
+                <button
+                  data-testid="img"
+                  className="hover:underline"
+                  onClick={() => download()}
+                >
+                  Download
+                </button>
               </div>
             </div>
           </div>
