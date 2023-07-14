@@ -9,6 +9,7 @@ import { useGlobalState } from "./Context";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Private from "./components/Private";
+import api from "./api";
 
 let didInit = false;
 
@@ -16,12 +17,13 @@ export const testContract = () => {
   // You can also make requests using axios directly
   axios
     .get("https://dev.api.redevops.store/openapi.json")
-    .then((res) => console.log(res))
+    .then(() => {})
     .catch((err) => console.error(err));
 };
 
 function App() {
   const [user, setUser] = useGlobalState("user");
+  const [data, setData] = useGlobalState("data");
   const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
   const [loading, setLoading] = useState(true);
   const getData = (counter) => {
