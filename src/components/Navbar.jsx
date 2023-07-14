@@ -15,6 +15,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -22,14 +23,49 @@ import {
 } from "../ui/alert-dialog";
 import { useGlobalState } from "../Context";
 import { prefix } from "../prefix";
+import api from "../api";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
+  const [data, setData] = useGlobalState("data");
   const [user, setUser] = useGlobalState("user");
   const logout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     window.location.pathname = "/login";
+  };
+
+  const registerVaccine = () => {
+    api
+      .post("/create", {
+        token: localStorage.getItem("jwt"),
+      })
+      .then((res) => {
+        api
+          .post("/myvaccine", {
+            token: localStorage.getItem("jwt"),
+          })
+          .then((res) => {
+            let toUpdateKeys = [
+              "id",
+              "user_id",
+              "vaccination_date",
+              "vaccine_id",
+              "verified",
+              "created_at",
+              "certificate_url",
+            ];
+            let profile = res.data[0];
+            Object.keys(data).forEach((k) => {
+              if (toUpdateKeys.includes(k)) {
+                data[k] = profile[k];
+              }
+            });
+            setData(data);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -55,6 +91,33 @@ function Navbar() {
         ) : (
           ""
         )}
+        <MenubarMenu>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <MenubarTrigger className="cursor-pointer">
+                Register for vaccine
+              </MenubarTrigger>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Are you sure you want to register for vaccine?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  The Hospital will allocate an available date and dose of
+                  vaccine, please read it carefully and bring your vaccine card
+                  on the mentioned date.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => registerVaccine()}>
+                  Register
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </MenubarMenu>
         {isLoggedIn ? (
           <MenubarMenu>
             <MenubarTrigger className="cursor-pointer">
@@ -62,16 +125,7 @@ function Navbar() {
             </MenubarTrigger>
           </MenubarMenu>
         ) : (
-          <MenubarMenu>
-            <MenubarTrigger
-              onClick={() => {
-                window.location.pathname = "/register";
-              }}
-              className="cursor-pointer"
-            >
-              Register for vaccine
-            </MenubarTrigger>
-          </MenubarMenu>
+          ""
         )}
         {user.name ? (
           <MenubarMenu>
