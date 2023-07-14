@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineHome } from "react-icons/ai";
 import auth from "../auth";
 import { useGlobalState } from "../Context";
+import api from "../api";
 
 function Register() {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ function Register() {
   const [passError, setPassError] = useState(false);
   const [user, setUser] = useGlobalState("user");
   const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
+  const [loading, setLoading] = useState(false);
 
   const register = () => {
     const dataToPost = new FormData();
@@ -29,6 +31,7 @@ function Register() {
       toast.error("Passwords do not match");
       setPassError(true);
     } else {
+      setLoading(true);
       auth
         .post("/create", {
           name: name,
@@ -68,17 +71,33 @@ function Register() {
                       user[k] = profile[k];
                     }
                   });
+                  api
+                    .post("/create", {
+                      token: localStorage.getItem("jwt"),
+                    })
+                    .then(() => {})
+                    .catch((err) => console.log(err));
                   setUser(user);
                   setIsLoggedIn(true);
+                  setLoading(false);
                   window.location.pathname = "/";
                 })
                 .catch((err) => {
+                  setLoading(false);
                   console.log(err);
                 });
             })
-            .catch((err) => console.log(err));
+
+            .catch((err) => {
+              setLoading(false);
+              console.log(err);
+            });
         })
-        .catch((err) => console.log(err));
+
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
     }
   };
 
@@ -217,7 +236,7 @@ function Register() {
                 className="col-start-2 px-16"
                 type="button"
               >
-                Signup
+                {loading ? "Loading" : "Signup"}
               </Button>
             </div>
             <div className="flex justify-center gap-x-4 mt-8 px-5">

@@ -21,6 +21,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "antd": "^5.7.0",
     "axios": "^1.4.0",
+    "axios-mock-adapter": "^1.21.5",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "lucide-react": "^0.259.0",

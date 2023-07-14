@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import vaccineData from "../vaccineData";
 import { useGlobalState } from "../Context";
+import api from "../api";
 
+const link = document.createElement("a");
 const Home = () => {
   const [user, setUser] = useGlobalState("user");
-  const [isLoggedIn, setIsLoggedIn] = useGlobalState("isLoggedIn");
+  const [data, setData] = useGlobalState("data");
+  const download = () => {
+    link.href = `${
+      data.certificate_url
+        ? `${data.certificate_url}`
+        : "https://www.wits.ac.za/media/wits-university/mandatory-vaccinations/images/Vaccination%20policy%20400x4002.jpg"
+    }`;
+    link.download = "certificate.jpg";
+    link.click();
+  };
+
+  useEffect(() => {
+    api
+      .post("/myvaccine", {
+        token: localStorage.getItem("jwt"),
+      })
+      .then((res) => {
+        let toUpdateKeys = [
+          "id",
+          "user_id",
+          "vaccination_date",
+          "vaccine_id",
+          "verified",
+          "created_at",
+          "certificate_url",
+        ];
+        let profile = res.data[0];
+        Object.keys(data).forEach((k) => {
+          if (toUpdateKeys.includes(k)) {
+            data[k] = profile[k];
+          }
+        });
+        setData(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -27,7 +64,7 @@ const Home = () => {
                 <b>Name:</b> {user.name}
               </div>
               <div data-testid="phone" className="">
-                <b>Phone:</b> {user.phone}
+                <b>Email:</b> {user.email}
               </div>
             </div>
           </div>
@@ -43,11 +80,9 @@ const Home = () => {
             </div>
 
             <div className="px-2 lg:px-16 flex flex-col gap-6">
-              <div data-testid="center" className="">
-                <b>Center:</b> {user.center}
-              </div>
               <div data-testid="date" className="">
-                <b>Date:</b> {user.date}
+                <b>Date:</b>{" "}
+                {data.vaccination_date ? data.vaccination_date : "2023-07-14"}
               </div>
               <div data-testid="status" className="">
                 <b>Status:</b>{" "}
@@ -59,14 +94,13 @@ const Home = () => {
               </div>
               <div data-testid="cert" className="">
                 <b>Certificate:</b>{" "}
-                {user.certificate_url ? (
-                  <button className="hover:underline">Download</button>
-                ) : (
-                  "Not available yet"
-                )}
-              </div>
-              <div data-testid="operator" className="">
-                <b>Operator:</b> {user.operator}
+                <button
+                  data-testid="img"
+                  className="hover:underline"
+                  onClick={() => download()}
+                >
+                  Download
+                </button>
               </div>
             </div>
           </div>
