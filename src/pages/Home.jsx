@@ -52,7 +52,7 @@ const Home = () => {
   else
     return (
       <div>
-        <Navbar />
+        <Navbar status={data.vaccine_id} />
         <div>
           <div className="m-10 border-l-2 border-l-black border-r-2 border-r-black rounded-lg shadow-md p-4 lg:p-10">
             <div>
