@@ -62,6 +62,7 @@ function Navbar({ status }) {
               }
             });
             setData(data);
+            window.location.reload();
           })
           .catch((err) => console.log(err));
       })
@@ -81,7 +82,7 @@ function Navbar({ status }) {
           <MenubarMenu>
             <MenubarTrigger
               onClick={() => {
-                window.location.href = `https://${prefix}admin.redevps.store`;
+                window.location.href = `https://${prefix}admin.redevops.store`;
               }}
               className="cursor-pointer"
             >
