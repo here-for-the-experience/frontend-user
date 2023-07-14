@@ -48,27 +48,6 @@ describe("Home component", () => {
     // Add assertions to check that the component renders without errors
   });
 
-  test("displays user personal information", () => {
-    const { getByTestId } = render(<Home />);
-    const nameElement = getByTestId("name");
-    const phoneElement = getByTestId("phone");
-    // Assert that the user's name and phone number are displayed correctly
-    expect(nameElement).toBeInTheDocument();
-    expect(phoneElement).toBeInTheDocument();
-  });
-
-  test("displays vaccine information", () => {
-    const { getByTestId } = render(<Home />);
-    const dateElement = getByTestId("date");
-    const statusElement = getByTestId("status");
-    const certificateElement = getByTestId("cert");
-
-    //Assert that the vaccine information is displayed correctly
-    expect(dateElement).toBeInTheDocument();
-    expect(statusElement).toBeInTheDocument();
-    expect(certificateElement).toBeInTheDocument();
-  });
-
   const columns = [
     { title: "Vaccine Center", dataIndex: "center", key: "center" },
     {

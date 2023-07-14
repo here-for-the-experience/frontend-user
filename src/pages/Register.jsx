@@ -71,12 +71,6 @@ function Register() {
                       user[k] = profile[k];
                     }
                   });
-                  api
-                    .post("/create", {
-                      token: localStorage.getItem("jwt"),
-                    })
-                    .then(() => {})
-                    .catch((err) => console.log(err));
                   setUser(user);
                   setIsLoggedIn(true);
                   setLoading(false);

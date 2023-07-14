@@ -10,6 +10,7 @@ const userState = {
     vaccine_id: null,
     verified: false,
   },
+  vaccineName: "",
   user: {
     id: null,
     name: "",
