@@ -93,7 +93,14 @@ function App() {
                   </Private>
                 }
               />
-              <Route path="home" element={<Home />} />
+              <Route
+                path="home"
+                element={
+                  <Private>
+                    <Home />
+                  </Private>
+                }
+              />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="verify" element={<Verify />} />
